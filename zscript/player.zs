@@ -20,6 +20,11 @@ class DriftPlayer : DoomPlayer {
         storedspd = -1; // No stored speed at the start!
     }
 
+    override vector2 BobWeapon(double frac) {
+        double ypart = abs(sway * 0.5);
+        return (sway,ypart);
+    }
+
     override void Tick() {
         Super.Tick();
         // First things first, check if we're crouching.
