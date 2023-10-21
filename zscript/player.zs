@@ -66,7 +66,7 @@ class DriftPlayer : DoomPlayer {
         }
 
         // Handle sway after movement.
-        double swayval = vel.length() < WALK ? vel.length() * 0.5 : vel.length();
+        double swayval = vel.length() * (vel.length() / WALK);
         swayamp = swayamp + (swayval - swayamp) * min(1.0,vel.length() / WALK);
         sway = sin(GetAge() * 10) * swayamp;
     }
