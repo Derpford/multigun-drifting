@@ -13,6 +13,7 @@ class DriftPlayer : DoomPlayer {
 
     Default {
         Player.StartItem "TestGun";
+        Player.StartItem "TestGun2";
     }
 
     override void PostBeginPlay() {
@@ -21,7 +22,13 @@ class DriftPlayer : DoomPlayer {
     }
 
     override vector2 BobWeapon(double frac) {
-        double ypart = abs(sway * 0.5);
+        double fac = 1;
+        let w = DriftWeapon(player.readyweapon);
+        if (w) {
+            fac = w.swayfactor;
+        }
+        double xpart = sway * 1.5 * fac;
+        double ypart = abs(sway * 0.5) * fac;
         return (sway,ypart);
     }
 
@@ -71,8 +78,9 @@ class DriftPlayer : DoomPlayer {
         }
 
         // Handle sway after movement.
-        double swayval = vel.length() * (vel.length() / WALK);
-        swayamp = swayamp + (swayval - swayamp) * min(1.0,vel.length() / WALK);
+        double l = max(0.1, vel.length());
+        double swayval = l * (l / WALK);
+        swayamp = swayamp + (swayval - swayamp) * min(1.0,l / WALK);
         sway = sin(GetAge() * 10) * swayamp;
     }
 
@@ -157,61 +165,4 @@ class DriftPlayer : DoomPlayer {
 			}
 		}
 	}
-}
-
-class TestGun : Weapon {
-    // Shoots simple projectiles.
-
-    default {
-        Weapon.SlotNumber 1;
-    }
-
-    action void Fire(Name proj) {
-        double ang = 0;
-        if (DriftPlayer(invoker.owner)) {
-            let dp = DriftPlayer(invoker.owner);
-            ang = -dp.sway;
-        }
-
-        A_FireProjectile(proj,angle:ang);
-    }
-
-    states {
-        Spawn:
-            PIST A -1;
-        
-        Select:
-            PISG A 1 A_Raise(18);
-            Loop;
-        DeSelect:
-            PISG A 1 A_Lower(18);
-            Loop;
-
-        Ready:
-            PISG A 1 A_WeaponReady();
-            Loop;
-        
-        Fire:
-            PISG B 3 Fire("TestShot");
-            PISG C 2;
-            Goto Ready;
-    }
-}
-
-class TestShot : Actor {
-    default {
-        DamageFunction (5);
-        Projectile;
-        Speed 40;
-        +BRIGHT;
-    }
-
-    states {
-        Spawn:
-            PLSS AB 3;
-            Loop;
-        Death:
-            PLSE ABCDE 3;
-            Stop;
-    }
 }
