@@ -14,7 +14,7 @@ Your point of aim will sweep left and right as you move, based on how fast you'r
 It should be viable to run past a horde and spray into it, but this isn't ideal because…
 
 ## Damage Modifiers
-You deal more or less damage to targets based on how square the hit was. Damage ramps up to 1.5x if the shot lands exactly at the center of the target, and down to 0.5x if the shot lands right at the edge of the target (this is achieved by doing `absangle` on the projectile and the angle to what the projectile hit–0 means a perfect hit, 90 or more means a glancing blow). This applies to the player as well, so near-misses should feel a little less bullshit, while directly facetanking things will be extremely dangerous.
+You deal more or less damage to targets based on how square the hit was. Damage ramps up to 2.0x if the shot lands exactly at the center of the target, and down to 0.5x if the shot lands right at the edge of the target (this is achieved by doing `absangle` on the projectile and the angle to what the projectile hit–-0 means a perfect hit, 90 or more means a glancing blow). This applies to the player as well, so near-misses should feel a little less bullshit, while directly facetanking things will be extremely dangerous.
 
 ## Projectile Drift
 All of your weapons fire projectiles. However, not all projectiles are created equal! Each projectile has a "drift factor" and "optimum range"; after the optimum range, the projectile will start deviating from its flight path, as eddies in the airstream (so he is, isn't he) mess with the projectile. This drift happens in the XY axis--the projectile *also* starts losing Z velocity at this point, though this will probably only matter at extreme ranges. In effect, spread gets much worse past the optimum range.
