@@ -22,7 +22,7 @@ class TestGun : DriftWeapon {
             Loop;
         
         Fire:
-            PISG B 3 Fire("TestShot");
+            PISG B 3 Fire();
             PISG C 2;
             Goto Ready;
     }
