@@ -12,7 +12,8 @@ class DriftPlayer : DoomPlayer {
     double swayamp; // How far the crosshair sways.
 
     Default {
-        Player.StartItem "TestGun";
+        Player.StartItem "PlasmaPistol";
+        Player.StartItem "Capacitor",20;
         Player.StartItem "TestGun2";
     }
 
