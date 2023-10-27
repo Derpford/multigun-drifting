@@ -25,7 +25,7 @@ class DriftWeapon : Weapon abstract {
 
 }
 
-class DriftShot : Actor {
+class DriftShot : FastProjectile {
     // A single bullet.
 
     const DT = 1./35.;
@@ -48,10 +48,12 @@ class DriftShot : Actor {
         DamageFunction(12);
         Radius 2;
         Height 2;
-        DriftShot.Drift (5,5),512;
+        DriftShot.Drift (5,5),256;
         DriftShot.DriftSpeed 10,20;
         Gravity 0.05; // Falls very slowly once range is exceeded.
-        Speed 60;
+        Speed 120;
+        MissileHeight 8;
+        MissileType "DriftShotTrail";
     }
 
     override void PostBeginPlay() {
@@ -83,14 +85,32 @@ class DriftShot : Actor {
             }
             vel.z += dir.y * drift.y * DT;
         }
+
+        if (!bNOGRAVITY) {
+            vel.z -= GetGravity();
+        }
     }
 
     states {
         Spawn:
-            PUFF A 1;
+            TNT1 A 1;
             Loop;
         Death:
             TNT1 A 0;
             Stop;
+    }
+}
+
+class DriftShotTrail : Actor {
+    default {
+        +NOINTERACTION;
+        RenderStyle "Add";
+        Alpha 0.5;
+    }
+
+    states {
+        Spawn:
+            PUFF A 1 A_FadeOut();
+            Loop;
     }
 }
