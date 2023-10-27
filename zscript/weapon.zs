@@ -39,6 +39,8 @@ class DriftShot : FastProjectile {
                                  // range is how far the projectile travels before deviating
                                  // Drift values are per second
     
+    bool isDrifting;
+
     double driftspd; // How fast drifting 'ticks'. Applied as a multiplier to GetAge.
     double driftspdmin, driftspdmax; // A random range to apply to driftspd.
     Property DriftSpeed: driftspdmin, driftspdmax;
@@ -68,6 +70,26 @@ class DriftShot : FastProjectile {
 
     }
 
+    virtual void DoDrift() {
+        // Called once a tick while drifting.
+        double theta = (GetAge() * driftspd) + phase;
+        vector2 dir = (-cos(theta),sin(theta)).unit();
+        vector2 xdir = RotateVector(vel.xy,90).unit();
+        xdir = xdir * dir.x * drift.x * DT;
+        if (spinright) {
+            vel.xy += xdir;
+        } else {
+            vel.xy -= xdir;
+        }
+        vel.z += dir.y * drift.y * DT;
+    }
+
+    virtual void DriftEnabled() {
+        // Called once when projectile drifting starts.
+        // I might use this later to simulate a tightly-packed shotshell starting to spread after a few meters.
+        bNOGRAVITY = false;
+    }
+
     override void Tick() {
         Super.Tick();
 
@@ -76,17 +98,14 @@ class DriftShot : FastProjectile {
             range -= vel.length();
         } else {
             // Now the meat of the work happens.
-            bNOGRAVITY = false;
-            double theta = (GetAge() * driftspd) + phase;
-            vector2 dir = (-cos(theta),sin(theta)).unit();
-            vector2 xdir = RotateVector(vel.xy,90).unit();
-            xdir = xdir * dir.x * drift.x * DT;
-            if (spinright) {
-                vel.xy += xdir;
-            } else {
-                vel.xy -= xdir;
+            if (!isDrifting) {
+                isDrifting = true;
+                DriftEnabled();
             }
-            vel.z += dir.y * drift.y * DT;
+        }
+
+        if (isDrifting) {
+            DoDrift();
         }
 
         if (!bNOGRAVITY) {
