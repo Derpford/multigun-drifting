@@ -66,7 +66,7 @@ class TestGun2 : DriftWeapon {
             Loop;
 
         Fire:
-            SHTG A 3 Fire("TestShot",(
+            SHTG A 3 Fire("DriftShot",(
                 frandom(-2,2),
                 frandom(-6,2)
             ));
