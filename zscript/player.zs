@@ -14,7 +14,8 @@ class DriftPlayer : DoomPlayer {
     Default {
         Player.StartItem "PlasmaPistol";
         Player.StartItem "Capacitor",20;
-        Player.StartItem "TestGun2";
+        Player.StartItem "UMP45";
+        Player.StartItem "Clip",50;
     }
 
     override void PostBeginPlay() {
