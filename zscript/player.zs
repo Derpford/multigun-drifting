@@ -52,13 +52,14 @@ class DriftPlayer : DoomPlayer {
             // Engage dorifto.
             if (storedspd < 0) {
                 storedspd = vel.length();
-                drift = RotateVector(vel.xy,-angle); // Store drift relative to facing.
+                // drift = RotateVector(vel.xy,-angle); // Store drift relative to facing.
+                drift = (GetPlayerInput(INPUT_FORWARDMOVE),-GetPlayerInput(INPUT_SIDEMOVE)).unit() * vel.length();
                 driftangle = angle;
             } else { // On everything after the first tick of drift...
                 if (player.onground) {
                     double turn = 1.0 + abs(GetPlayerInput(INPUT_YAW) / 32767.);
                     double mod = DT * turn * 0.4 * drift.length();
-                    driftangle += DeltaAngle(driftangle,angle) * 0.2;
+                    driftangle += DeltaAngle(driftangle,angle) * 1.5 * DT;
                     if (vel.xy.length() > 10) {
                         vel.xy = vel.xy.unit() * ( 10 - vel.xy.length() ) * 0.9;
                     }
