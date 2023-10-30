@@ -10,6 +10,7 @@ class PlasmaPistol : DriftWeapon {
         Weapon.SlotNumber 1;
         DriftWeapon.Sway 0.5;
         DriftWeapon.Shot "PlasBolt","weapons/plasmaf";
+        DriftWeapon.Flip 4,0.5;
     }
 
     override void DoEffect() {
