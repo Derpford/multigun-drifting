@@ -24,13 +24,15 @@ class DriftPlayer : DoomPlayer {
 
     override vector2 BobWeapon(double frac) {
         double fac = 1;
+        double flip = 0;
         let w = DriftWeapon(player.readyweapon);
         if (w) {
             fac = w.swayfactor;
+            flip = w.mflip;
         }
         double xpart = sway * 1.5 * fac;
-        double ypart = abs(sway * 0.5) * fac;
-        return (sway,ypart);
+        double ypart = flip + (abs(sway * 0.5) * fac);
+        return (xpart,ypart);
     }
 
     override void Tick() {

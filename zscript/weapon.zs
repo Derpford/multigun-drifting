@@ -8,9 +8,14 @@ class DriftWeapon : Weapon abstract {
     String sound;
     Property Shot: projectile,sound;
 
+    double mflip; // muzzle flip--or, how far down the sprite should be lowered to make it *look* like there's muzzle flip
+    double mflipadd, mflipdecay; // how much to add per shot, percentage to remove per second
+    Property Flip: mflipadd, mflipdecay;
+
 
     default {
         DriftWeapon.Sway 1;
+        DriftWeapon.Flip 3,1;
         DriftWeapon.Shot "DriftShot","weapons/pistol";
     }
 
@@ -20,10 +25,17 @@ class DriftWeapon : Weapon abstract {
         if (DriftPlayer(invoker.owner)) {
             let dp = DriftPlayer(invoker.owner);
             ang = -dp.sway * invoker.swayfactor;
+            invoker.mflip += invoker.mflipadd;
         }
 
         A_FireProjectile(proj,angle:ang+angles.x,ammo,offs.x,offs.y,flags,angles.y);
         A_StartSound(invoker.sound,1);
+    }
+
+    override void Tick() {
+        Super.Tick();
+        double mfd = ceil(mflip * mflipdecay * 1./35.);
+        mflip = max(0,mflip-mfd);
     }
 
 }
