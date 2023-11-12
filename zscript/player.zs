@@ -11,10 +11,12 @@ class DriftPlayer : DoomPlayer {
     double sway; // Where the crosshair is swaying.
     double swayamp; // How far the crosshair sways.
 
+    double rangefind; // rangefinder value
+
     Default {
+        Player.StartItem "UMP45";
         Player.StartItem "PlasmaPistol";
         Player.StartItem "Capacitor",20;
-        Player.StartItem "UMP45";
         Player.StartItem "Clip",50;
     }
 
@@ -38,6 +40,12 @@ class DriftPlayer : DoomPlayer {
 
     override void Tick() {
         Super.Tick();
+        // Do the rangefinder.
+        double rfzoffs = height * 0.5 - floorclip + AttackZOffset * player.crouchFactor;
+        FLineTraceData d;
+        LineTrace(angle,9999,pitch,0,rfzoffs,data:d);
+        rangefind = (pos - d.HitLocation).length();
+
         // First things first, check if we're crouching.
         int btns = GetPlayerInput(INPUT_BUTTONS);
         double side = GetPlayerInput(INPUT_SIDEMOVE);
