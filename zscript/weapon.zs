@@ -104,6 +104,15 @@ class DriftShot : FastProjectile {
 
     override void Tick() {
         Super.Tick();
+        // Set the pitch and angle according to our velocity.
+        angle = VectorAngle(vel.x,vel.y);
+        pitch = VectorAngle(vel.xy.length(),vel.z);
+
+        if (!InStateSequence(curstate, ResolveState("Spawn"))) { return; } // Don't process anything else if we're not alive.
+
+        if (isDrifting) {
+            DoDrift();
+        }
 
         // First of all, have we exceeded our range yet?
         if (range > 0) {
@@ -114,10 +123,6 @@ class DriftShot : FastProjectile {
                 isDrifting = true;
                 DriftEnabled();
             }
-        }
-
-        if (isDrifting) {
-            DoDrift();
         }
 
         if (!bNOGRAVITY) {
