@@ -85,8 +85,9 @@ class DriftPlayer : DoomPlayer {
         // Handle sway after movement.
         double l = max(0.1, vel.length());
         double swayval = l * (l / WALK);
+        double swayspeed = (player.readyweapon is "DriftWeapon") ? DriftWeapon(player.readyweapon).swayspeed : 1.0;
         swayamp = drift == (0,0) ? swayamp + (swayval - swayamp) * min(1.0,l / WALK) : max(swayamp * 0.5,1.0);
-        sway = sin(GetAge() * 10) * swayamp;
+        sway = sin(GetAge() * 10 * swayspeed) * swayamp;
     }
 
     override void CrouchMove(int direction)

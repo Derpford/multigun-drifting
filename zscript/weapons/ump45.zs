@@ -4,7 +4,7 @@ class UMP45 : DriftWeapon {
 
     default {
         Weapon.SlotNumber 2;
-        DriftWeapon.Sway 1;
+        DriftWeapon.Sway 1,1;
         Weapon.AmmoType1 "Clip";
         Weapon.AmmoUse1 1;
         DriftWeapon.Flip 4,0.75;

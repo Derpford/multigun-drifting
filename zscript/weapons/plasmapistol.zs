@@ -8,7 +8,7 @@ class PlasmaPistol : DriftWeapon {
         Weapon.AmmoType1 "Capacitor";
         Weapon.AmmoUse1 1;
         Weapon.SlotNumber 1;
-        DriftWeapon.Sway 0.5;
+        DriftWeapon.Sway 0.5,1;
         DriftWeapon.Shot "PlasBolt","weapons/plasmaf";
         DriftWeapon.Flip 4,0.5;
     }

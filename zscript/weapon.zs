@@ -1,8 +1,8 @@
 class DriftWeapon : Weapon abstract {
     // Contains logic for firing projectiles.
 
-    double swayfactor;
-    Property Sway : swayfactor; // How much this weapon is affected by sway!
+    double swayfactor, swayspeed;
+    Property Sway : swayfactor, swayspeed; // How much this weapon is affected by sway!
 
     Name projectile; // What this gun fires by default.
     String sound;
@@ -14,7 +14,7 @@ class DriftWeapon : Weapon abstract {
 
 
     default {
-        DriftWeapon.Sway 1;
+        DriftWeapon.Sway 1,1;
         DriftWeapon.Flip 3,1;
         DriftWeapon.Shot "DriftShot","weapons/pistol";
     }

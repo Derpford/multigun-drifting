@@ -3,7 +3,7 @@ class TestGun : DriftWeapon {
 
     default {
         Weapon.SlotNumber 1;
-        DriftWeapon.Sway 0.5;
+        DriftWeapon.Sway 0.5,1;
     }
 
     states {
@@ -50,7 +50,7 @@ class TestGun2 : DriftWeapon {
     // A weapon with more sway and higher firerate, and also some spread.
     default {
         Weapon.SlotNumber 2;
-        DriftWeapon.Sway 1;
+        DriftWeapon.Sway 1,0.5;
     }
     
     states {
