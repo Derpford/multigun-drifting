@@ -56,9 +56,7 @@ class DriftPlayer : DoomPlayer {
         if (side == 0 && forward == 0 || inputs.length() <= 0 || inputs != inputs) {
             // Don't bother calculating angle.
         } else {
-            console.printf("Inputs: %0.1f, %0.1f",inputs.x,inputs.y);
             inputangle += VectorAngle(inputs.x,inputs.y);
-            console.printf("New input angle: %f",inputangle);
         }
         
         if (btns & BT_CROUCH) {
