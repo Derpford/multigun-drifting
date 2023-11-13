@@ -53,7 +53,7 @@ class DriftPlayer : DoomPlayer {
         double inputangle = angle;
         vector2 inputs = (forward,side).unit();
         // For drifting: If there's no movement going on at *all*, simply go forward.
-        if (side == 0 && forward == 0 || inputs.length() <= 0) {
+        if (side == 0 && forward == 0 || inputs.length() <= 0 || inputs != inputs) {
             // Don't bother calculating angle.
         } else {
             console.printf("Inputs: %0.1f, %0.1f",inputs.x,inputs.y);
@@ -65,8 +65,6 @@ class DriftPlayer : DoomPlayer {
             // Engage dorifto.
             if (storedspd < 0) {
                 storedspd = vel.length();
-                // drift = RotateVector(vel.xy,-angle); // Store drift relative to facing.
-                vector2 inputs = (GetPlayerInput(INPUT_FORWARDMOVE),-GetPlayerInput(INPUT_SIDEMOVE));
                 drift = inputs.unit() == inputs.unit() ? inputs.unit() * vel.length() : (1,0) * vel.length();
                 driftangle = angle;
             } else { // On everything after the first tick of drift...
