@@ -53,10 +53,12 @@ class DriftPlayer : DoomPlayer {
         double inputangle = angle;
         vector2 inputs = (forward,side).unit();
         // For drifting: If there's no movement going on at *all*, simply go forward.
-        if (side == 0 && forward == 0) {
+        if (side == 0 && forward == 0 || inputs.length() <= 0) {
             // Don't bother calculating angle.
         } else {
-            inputangle += atan2(-inputs.y,inputs.x);
+            console.printf("Inputs: %0.1f, %0.1f",inputs.x,inputs.y);
+            inputangle += VectorAngle(inputs.x,inputs.y);
+            console.printf("New input angle: %f",inputangle);
         }
         
         if (btns & BT_CROUCH) {
@@ -64,26 +66,33 @@ class DriftPlayer : DoomPlayer {
             if (storedspd < 0) {
                 storedspd = vel.length();
                 // drift = RotateVector(vel.xy,-angle); // Store drift relative to facing.
-                drift = (GetPlayerInput(INPUT_FORWARDMOVE),-GetPlayerInput(INPUT_SIDEMOVE)).unit() * vel.length();
+                vector2 inputs = (GetPlayerInput(INPUT_FORWARDMOVE),-GetPlayerInput(INPUT_SIDEMOVE));
+                drift = inputs.unit() == inputs.unit() ? inputs.unit() * vel.length() : (1,0) * vel.length();
                 driftangle = angle;
             } else { // On everything after the first tick of drift...
                 if (player.onground) {
+                    double len = drift.length() == drift.length() ? drift.length() : 1.0;
                     double turn = 1.0 + abs(GetPlayerInput(INPUT_YAW) / 32767.);
-                    double mod = DT * turn * 0.4 * drift.length();
+                    double mod = DT * turn * 0.4 * len;
                     driftangle += DeltaAngle(driftangle,angle) * 1.5 * DT;
                     if (vel.xy.length() > 10) {
                         vel.xy = vel.xy.unit() * ( 10 - vel.xy.length() ) * 0.9;
                     }
-                    drift = drift.unit() * max(7.0,drift.length() - mod); // Take a percentage from our drift.
-                    vel.xy = RotateVector(drift,driftangle); // set our velocity to the current drift amount.
+                    drift = drift.unit() * max(7.0,len - mod); // Take a percentage from our drift.
+                    if (len > 0) {
+                        vel.xy = RotateVector(drift,driftangle); // set our velocity to the current drift amount.
+                    }
                     momentum += mod * 1.5; // Store that percentage as bonus momentum.
                 }
             }
-        } else if (storedspd > 0) {
+        } else if (storedspd > 0 && drift.length() == drift.length() && inputangle == inputangle && drift.length() > 0) {
             // We've uncrouched. Release the speed.
             console.printf("Released speed: %0.1f, momentum: %0.1f",storedspd, momentum);
             console.printf("Final drift length: %0.1f",drift.length());
 
+            if (momentum == double.NaN) {
+                momentum = 0; //Oops, math ate your momentum.
+            }
             VelFromAngle(storedspd+momentum,inputangle);
             momentum = 0;
             storedspd = -1;
