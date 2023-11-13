@@ -115,9 +115,8 @@ class DriftShot : FastProjectile {
         }
 
         // First of all, have we exceeded our range yet?
-        if (range > 0) {
-            range -= vel.length();
-        } else {
+        range -= vel.length();
+        if (range < 0) {
             // Now the meat of the work happens.
             if (!isDrifting) {
                 isDrifting = true;
