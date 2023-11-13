@@ -67,7 +67,7 @@ class DriftShot : FastProjectile {
         Height 2;
         DriftShot.Drift (5,5),256;
         DriftShot.DriftSpeed 10,20;
-        Gravity 0.05; // Falls very slowly once range is exceeded.
+        // Gravity 0.05; // Falls very slowly once range is exceeded.
         Speed 120;
         MissileHeight 8;
         MissileType "DriftShotTrail";
@@ -125,7 +125,7 @@ class DriftShot : FastProjectile {
         }
 
         if (!bNOGRAVITY) {
-            vel.z -= GetGravity();
+            vel.z -= GetGravity() / (vel.length() * 0.1);
         }
     }
 
