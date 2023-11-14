@@ -13,6 +13,11 @@ class Mossberg : DriftWeapon replaces SuperShotgun {
         DriftWeapon.Shot "MossbergWad","weapons/shotgf"; // Should fire a 'wad' that later unfolds into a set of 8 pellets.
     }
 
+    action void FireShotty() {
+        Fire();
+        A_GunFlash();
+    }
+
     states {
         Spawn:
             SHOT A -1;
@@ -29,15 +34,17 @@ class Mossberg : DriftWeapon replaces SuperShotgun {
             Loop;
 
         Fire:
-            SHTG A 3 Fire();
+            SHTG A 3 FireShotty();
             SHTG B 3;
             SHTG C 4;
             SHTG D 5;
             SHTG CB 3;
-        Hold:
-            SHTG A 1;
-            SHTG A 0 A_Refire();
-            Goto Ready; // Semi-auto.
+            SHTG A 1 A_Refire();
+            Goto Ready;
+        
+        Flash:
+            SHTF AB 3 Bright;
+            Stop;
     }
 }
 
@@ -54,7 +61,6 @@ class MossbergWad : DriftShot {
 
     override void DriftEnabled() {
         // Spawns 8 submunitions, then dies.
-        console.printf("Spawning submunitions");
         for (int i = 0; i < 10; i++) {
             vector2 spread = RotateVector((frandom(i,i*0.5) * 0.1,0),frandom(0,360));
             let b = Spawn("MossbergPellet",pos);
