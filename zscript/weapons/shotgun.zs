@@ -104,16 +104,18 @@ class SawnOff : DriftWeapon replaces Shotgun {
     }
 
     action state FireChamber(bool which) { // if false, fires chamber1. Otherwise, fires chamber2.
-        if (which) {
+        if (!which) {
             if (!invoker.chamber1 && invoker.DepleteAmmo(false)) {
+                console.printf("Fire chamber1");
                 invoker.chamber1 = true;
-                Fire(offs:(2,0));
+                Fire(ammo:false,offs:(-2,0));
                 return ResolveState(null);
             }
         } else {
             if (!invoker.chamber2 && invoker.DepleteAmmo(false)) {
+                console.printf("Fire chamber2");
                 invoker.chamber2 = true;
-                Fire(offs:(-2,0));
+                Fire(ammo:false,offs:(2,0));
                 return ResolveState(null);
             }
         }
@@ -160,9 +162,9 @@ class SawnOff : DriftWeapon replaces Shotgun {
         
         Click:
             SHT2 A 2 A_StartSound("weapons/sshotc");
-        Hold:
+        ClickHold:
             SHT2 A 1;
-            SHT2 A 0 A_Refire();
+            SHT2 A 0 A_Refire("ClickHold");
             Goto Ready;
 
         Reload:
