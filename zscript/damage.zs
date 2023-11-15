@@ -9,11 +9,12 @@ class GlanceBrain : Inventory {
         Inventory.MaxAmount 1;
     }
 
-    override void ModifyDamage(int dmg, name type, out int newdmg, bool passive, Actor inf, Actor src) {
+    override void ModifyDamage(int dmg, name type, out int newdmg, bool passive, Actor inf, Actor src, int flags) {
         // Only run this once.
         if (!passive) {return;}
         // If there's no inflictor or source, don't modify the damage.
-        if (!inf && !src) { newdmg = dmg; return; }
+        // Likewise, if this is explosive damage (i.e., Vile fire), don't bother.
+        if ((flags & DMG_EXPLOSION) || (!inf && !src) || (inf == src)) { newdmg = dmg; console.printf("Skipped"); return; }
         double ang;
         if (inf) {
             // It's a projectile or puff.
