@@ -1,1 +1,7 @@
-ump/fire UMP4FIRE
+weapons/m60f UMP4FIRE
+$limit weapons/m60f 3
+
+mg1 ZSECMG1
+mg2 ZSECMG2
+mg3 ZSECMG3
+$random ump/fire { mg1 mg2 mg3 }

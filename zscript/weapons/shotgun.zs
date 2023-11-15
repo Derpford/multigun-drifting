@@ -43,7 +43,7 @@ class Mossberg : DriftWeapon replaces SuperShotgun {
             Goto Ready;
         
         Flash:
-            SHTF AB 3 Bright;
+            SHTF ABB 1 Bright;
             Stop;
     }
 }

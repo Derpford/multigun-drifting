@@ -4,19 +4,26 @@ class UMP45 : DriftWeapon {
 
     default {
         Weapon.SlotNumber 2;
-        DriftWeapon.Sway 1,1;
+        DriftWeapon.Sway 0.8,1;
         Weapon.AmmoType1 "Clip";
         Weapon.AmmoUse1 1;
-        DriftWeapon.Flip 4,0.75;
+        DriftWeapon.Flip 12,3;
         DriftWeapon.Shot "UMPShot","ump/fire";
     }
 
+    action void FireUMP() {
+        double rmax = invoker.mflip / 20.;
+        vector2 ang = (frandom(-rmax,rmax),frandom(-rmax*0.5,rmax*0.5));
+        Fire(angles:ang);
+    }
+
+
     states {
         Select:
-            UMP4 FED 2 A_Raise(16);
+            UMP4 F 2 A_Raise(16);
             Loop;
         DeSelect:
-            UMP4 DEF 2 A_Lower(16);
+            UMP4 F 2 A_Lower(16);
             Loop;
 
         Ready:
@@ -24,11 +31,7 @@ class UMP45 : DriftWeapon {
             Loop;
         
         Fire:
-            UMP4 B 1 Bright {
-                double rmax = invoker.mflip / 20.;
-                vector2 ang = (frandom(-rmax,rmax),frandom(-rmax*0.5,rmax*0.5));
-                Fire(angles:ang);
-            }
+            UMP4 B 1 Bright FireUMP();
             UMP4 CA 1;
             Goto Ready;
     }

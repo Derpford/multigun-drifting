@@ -25,7 +25,7 @@ class DriftWeapon : Weapon abstract {
         if (DriftPlayer(invoker.owner)) {
             let dp = DriftPlayer(invoker.owner);
             ang = -dp.sway * invoker.swayfactor;
-            invoker.mflip += invoker.mflipadd;
+            invoker.mflip += invoker.mflipadd * (invoker.mflipadd / (invoker.mflip + invoker.mflipadd));
         }
 
         A_FireProjectile(proj,angle:ang+angles.x,ammo,offs.x,offs.y,flags,angles.y);
@@ -34,7 +34,7 @@ class DriftWeapon : Weapon abstract {
 
     override void Tick() {
         Super.Tick();
-        double mfd = ceil(mflip * mflipdecay * 1./35.);
+        double mfd = mflip * mflipdecay * 1./35.;
         mflip = max(0,mflip-mfd);
     }
 

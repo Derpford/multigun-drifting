@@ -1,2 +1,5 @@
 UMP45 by Sgt Shivers
 UMP45 firing sound by WildWeasel
+
+DSNLFIRE from Nailborg by Mechadon, sound originally sourced from Quake
+ZSECMG1, 2, 3 from ZSec.wad, sound originally sourced from Doom 3(?)
