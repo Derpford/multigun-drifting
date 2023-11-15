@@ -39,6 +39,6 @@ class UMP45 : DriftWeapon {
 
 class UMPShot : DriftShot {
     default {
-        DamageFunction (22);
+        DamageFunction (12);
     }
 }
