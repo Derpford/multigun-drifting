@@ -51,12 +51,12 @@ class DriftPlayer : DoomPlayer {
         double side = GetPlayerInput(INPUT_SIDEMOVE);
         double forward = GetPlayerInput(INPUT_FORWARDMOVE);
         double inputangle = angle;
-        vector2 inputs = (forward,side).unit();
+        vector2 inputs = (forward,-side).unit();
         // For drifting: If there's no movement going on at *all*, simply go forward.
         if (side == 0 && forward == 0 || inputs.length() <= 0 || inputs != inputs) {
             // Don't bother calculating angle.
         } else {
-            inputangle += VectorAngle(inputs.x,-inputs.y);
+            inputangle += VectorAngle(inputs.x,inputs.y);
         }
         
         if (btns & BT_CROUCH) {
