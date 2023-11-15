@@ -35,7 +35,8 @@ class SquadAutoWeapon : DriftWeapon replaces Chaingun {
             Loop;
         
         Fire:
-            CHGG ABAB 2 FireSAW();
+            CHGG ABA 2 FireSAW();
+            CHGG B 1;
             CHGG AB 2 A_Refire();
             CHGG A 0 A_StartSound("weapons/sshoto");
             CHGG AB 3 A_Refire();

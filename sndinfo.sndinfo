@@ -1,5 +1,5 @@
 weapons/m60f UMP4FIRE
-$limit weapons/m60f 3
+$limit weapons/m60f 2
 
 mg1 ZSECMG1
 mg2 ZSECMG2
