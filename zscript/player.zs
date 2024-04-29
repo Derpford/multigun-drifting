@@ -1,5 +1,6 @@
 class DriftPlayer : DoomPlayer {
     // DOOMGUY DORIFTO
+    mixin DampedSpring;
 
     const WALK = 12.0; // Anything below this is considered walking!
     const DT = 1./35.;
@@ -10,6 +11,7 @@ class DriftPlayer : DoomPlayer {
     double driftangle; // Which direction is the drift facing toward? Approaches current angle.
     double sway; // Where the crosshair is swaying.
     double swayamp; // How far the crosshair sways.
+    double swayampdelta; // How is the sway changing?
 
     double rangefind; // rangefinder value
 
@@ -81,7 +83,7 @@ class DriftPlayer : DoomPlayer {
                     momentum += mod * 1.5; // Store that percentage as bonus momentum.
                 }
             }
-        } else if (storedspd > 0 && drift.length() == drift.length() && inputangle == inputangle && drift.length() > 0) {
+        } else if (storedspd > 0 && drift == drift && inputangle == inputangle && drift.length() > 0) {
             // We've uncrouched. Release the speed.
             console.printf("Released speed: %0.1f, momentum: %0.1f",storedspd, momentum);
             console.printf("Final drift length: %0.1f",drift.length());
@@ -99,8 +101,9 @@ class DriftPlayer : DoomPlayer {
         double l = max(0.1, vel.length());
         double swayval = l * (l / WALK);
         double swayspeed = (player.readyweapon is "DriftWeapon") ? DriftWeapon(player.readyweapon).swayspeed : 1.0;
-        swayamp = drift == (0,0) ? swayamp + (swayval - swayamp) * min(1.0,l / WALK) : max(swayamp * 0.5,1.0);
-        sway = sin(GetAge() * 10 * swayspeed) * swayamp;
+        swayampdelta = damp(swayamp,swayampdelta,vel.length() / WALK,0);
+        swayamp += swayampdelta;
+        sway = sin(GetAge() * 10 * swayspeed) * 10 * swayamp;
     }
 
     override void CrouchMove(int direction)
