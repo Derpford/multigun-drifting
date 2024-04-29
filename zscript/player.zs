@@ -86,7 +86,7 @@ class DriftPlayer : DoomPlayer {
             console.printf("Released speed: %0.1f, momentum: %0.1f",storedspd, momentum);
             console.printf("Final drift length: %0.1f",drift.length());
 
-            if (momentum == double.NaN) {
+            if (momentum != momentum) {
                 momentum = 0; //Oops, math ate your momentum.
             }
             VelFromAngle(storedspd+momentum,inputangle);
