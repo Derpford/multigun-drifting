@@ -98,15 +98,19 @@ class DriftPlayer : DoomPlayer {
         }
 
         // Handle sway after movement.
-        double l = max(0.1, vel.length());
-        double swayval = l * (l / WALK);
-        double swayspeed = (player.readyweapon is "DriftWeapon") ? DriftWeapon(player.readyweapon).swayspeed : 1.0;
-        double driftfac = (player.readyweapon is "DriftWeapon") ? DriftWeapon(player.readyweapon).driftfactor : 0.3;
-        double spdmod = vel.length() / WALK;
-        if (storedspd > 0) spdmod *= driftfac;
-        swayampdelta = damp(swayamp,swayampdelta,spdmod,0);
-        swayamp += swayampdelta;
-        sway = sin(GetAge() * 10 * swayspeed) * 10 * swayamp;
+        // double l = max(0.1, vel.length());
+        // double swayval = l * (l / WALK);
+        if (player.readyweapon is "DriftWeapon") {
+            DriftWeapon wep = DriftWeapon(player.ReadyWeapon);
+            double swayspeed = wep.swayspeed;
+            double driftfac = wep.driftfactor;
+            double spdmod = vel.length() / WALK;
+            if (storedspd > 0) spdmod *= driftfac;
+            swayampdelta = damp(swayamp,swayampdelta,spdmod,0);
+            swayamp += swayampdelta;
+            sway = sin(GetAge() * swayspeed) * (swayamp * wep.swayfactor);
+            console.printf("Player sway: %0.1f (%0.1f)",sway,swayamp);
+        }
     }
 
     override void CrouchMove(int direction)

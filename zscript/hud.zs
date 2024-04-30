@@ -110,12 +110,7 @@ class DriftHud : DoomStatusBar {
         super.Draw(state,ticfrac);
         DriftPlayer plr = DriftPlayer(CPlayer.mo);
         double fac = 1;
-        let wep = DriftWeapon(CPlayer.readyweapon);
-        if (wep) {
-            fac = wep.swayfactor;
-        }
 
-        double sway = plr.sway * 5 * fac;
         double healthpercent = double(plr.health) / double (plr.GetMaxHealth());
 		// "Enhanced" crosshair health (blue-green-yellow-red)
         // Borrowed from gzdoom's own code.
@@ -126,6 +121,25 @@ class DriftHud : DoomStatusBar {
 		double saturation = health < 150 ? 1.f : 1.f - (health - 150) / 100.f;
         HsvToRgb(double(health) * 1.2,saturation,1,red,green,blue);
         Color col = Color(255,red,green,blue);
+        double spacing = 12.0;
+        Vector2 scl = (1.0,1.0);
+
+        // Calculate weapon crosshair sway.
+        let wep = DriftWeapon(CPlayer.readyweapon);
+        if (wep) {
+            fac = wep.swayfactor;
+        }
+        if (wep) {
+            spacing += 1.1 * wep.mflip;
+            scl += scl * (wep.mflip * 0.1);
+        }
+        double maxsway = 1.8 * 30 * fac;
+        double sway = plr.sway * 30;
+        if (wep) maxsway += 1.1 * wep.mflip;
+        DrawImage("ARROWDN",(0,-spacing),DI_SCREEN_CENTER|DI_ITEM_CENTER,scale:scl,style:STYLE_Shaded,col: col);
+        DrawImage("ARROWUP",(0,spacing),DI_SCREEN_CENTER|DI_ITEM_CENTER,scale:scl,style:STYLE_Shaded,col: col);
+        DrawImage("RBRKT",(maxsway,0),DI_SCREEN_CENTER|DI_ITEM_CENTER,scale:scl,style:STYLE_Shaded,col: col);
+        DrawImage("LBRKT",(-maxsway,0),DI_SCREEN_CENTER|DI_ITEM_CENTER,scale:scl,style:STYLE_Shaded,col: col);
         DrawImage("XHAIRS2",(sway,0),DI_SCREEN_CENTER|DI_ITEM_CENTER,style:STYLE_Shaded,col: col);
         
         // rangefinder

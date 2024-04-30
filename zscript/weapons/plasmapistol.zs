@@ -8,9 +8,10 @@ class PlasmaPistol : DriftWeapon replaces Chainsaw {
         Weapon.AmmoType1 "Capacitor";
         Weapon.AmmoUse1 1;
         Weapon.SlotNumber 1;
-        DriftWeapon.Sway 0.5,1;
+        DriftWeapon.Sway 2,10;
         DriftWeapon.Shot "PlasBolt","weapons/plasmaf";
         DriftWeapon.Flip 4,0.5;
+        DriftWeapon.DriftFac 0.1; // Much more useful while drifting!
         Inventory.PickupMessage "Got a plasma sidearm.";
     }
 

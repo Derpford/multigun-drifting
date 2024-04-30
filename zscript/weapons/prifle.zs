@@ -8,7 +8,7 @@ class PulseRifle : DriftWeapon replaces PlasmaRifle {
 
     default {
         DriftWeapon.Shot "PRShot","weapons/plasmaf";
-        DriftWeapon.Sway 0.9,1.1;
+        DriftWeapon.Sway 6,11;
         DriftWeapon.Flip 14, 5;
         Weapon.SlotNumber 4;
         Weapon.AmmoType1 "Cell";

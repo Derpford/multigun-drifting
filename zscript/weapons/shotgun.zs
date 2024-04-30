@@ -4,7 +4,7 @@ class Mossberg : DriftWeapon replaces SuperShotgun {
     // to match the slower pace of the weapon.
 
     default {
-        DriftWeapon.Sway 1.2,0.5;
+        DriftWeapon.Sway 8,5;
         DriftWeapon.Flip 10,1; // Really hard kick!
         Weapon.AmmoType1 "Shell";
         Weapon.AmmoUse1 1;
@@ -94,7 +94,7 @@ class SawnOff : DriftWeapon replaces Shotgun {
     bool chamber1,chamber2;
 
     default {
-        DriftWeapon.Sway 0.6,1.0;
+        DriftWeapon.Sway 3,10;
         DriftWeapon.Flip 15,1; // Kicks even harder than the shotgun.
         DriftWeapon.Shot "SawnoffWad","weapons/sshotf";
         Weapon.SlotNumber 3;

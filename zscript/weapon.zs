@@ -17,7 +17,7 @@ class DriftWeapon : Weapon abstract {
 
 
     default {
-        DriftWeapon.Sway 1,1;
+        DriftWeapon.Sway 3,10;
         DriftWeapon.Flip 3,1;
         DriftWeapon.Shot "DriftShot","weapons/pistol";
         DriftWeapon.DriftFac 0.3;
