@@ -23,7 +23,7 @@ class DriftWeapon : Weapon abstract {
         DriftWeapon.DriftFac 0.3;
     }
 
-    action void Fire(Name proj = "null",Vector2 angles = (0,0),bool ammo = true,vector2 offs = (0,0),int flags = 0) {
+    action Actor Fire(Name proj = "null",Vector2 angles = (0,0),bool ammo = true,vector2 offs = (0,0),int flags = 0) {
         if (proj == "null") {proj = invoker.projectile;}
         double ang = 0;
         if (DriftPlayer(invoker.owner)) {
@@ -32,8 +32,10 @@ class DriftWeapon : Weapon abstract {
             invoker.mflip += invoker.mflipadd * (invoker.mflipadd / (invoker.mflip + invoker.mflipadd));
         }
 
-        A_FireProjectile(proj,angle:ang+angles.x,ammo,offs.x,offs.y,flags,angles.y);
+        Actor r1,r2;
+        [r1,r2] = A_FireProjectile(proj,angle:ang+angles.x,ammo,offs.x,offs.y,flags,angles.y);
         A_StartSound(invoker.sound,1);
+        return r2;
     }
 
     override void Tick() {
