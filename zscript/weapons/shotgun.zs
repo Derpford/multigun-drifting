@@ -11,6 +11,7 @@ class Mossberg : DriftWeapon replaces SuperShotgun {
         Weapon.AmmoGive1 8;
         Weapon.SlotNumber 3;
         DriftWeapon.Shot "MossbergWad","weapons/shotgf"; // Should fire a 'wad' that later unfolds into a set of 8 pellets.
+        Inventory.PickupMessage "Got a pump shotgun.";
     }
 
     action void FireShotty() {
@@ -48,28 +49,35 @@ class Mossberg : DriftWeapon replaces SuperShotgun {
     }
 }
 
-class MossbergWad : DriftShot {
-    // A tightly-packed wad of pellets that hasn't spread yet.
-    default {
-        Speed 120;
-        DamageFunction (96); // This thing HURTS.
-        Radius 3;
-        Height 2;
-        DriftShot.Drift (1,1),120; // Spreads out pretty quick.
-        DriftShot.DriftSpeed 10,20; // Doesn't matter much, since this thing disappears the moment it spawns its submunitions.
-    }
-
+class PackedShot : DriftShot {
+    // Contains submunitions!
+    Name projectile;
+    int projcount;
+    Property Submunition: projectile,projcount;
     override void DriftEnabled() {
-        // Spawns 8 submunitions, then dies.
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < projcount; i++) {
             vector2 spread = RotateVector((frandom(i,i*0.5) * 0.1,0),frandom(0,360));
-            let b = Spawn("MossbergPellet",pos);
+            let b = Spawn(projectile,pos);
             b.target = target;
             b.Vel3DFromAngle(vel.length(),angle+spread.x,-(pitch+spread.y));
         }
 
         SetState(ResolveState("Death"));
     }
+}
+
+class MossbergWad : PackedShot {
+    // A tightly-packed wad of pellets that hasn't spread yet.
+    default {
+        Speed 120;
+        DamageFunction (96); // This thing HURTS.
+        Radius 3;
+        Height 2;
+        PackedShot.Submunition "MossbergPellet",10;
+        DriftShot.Drift (1,1),120; // Spreads out pretty quick.
+        DriftShot.DriftSpeed 10,20; // Doesn't matter much, since this thing disappears the moment it spawns its submunitions.
+    }
+
 }
 
 class MossbergPellet : DriftShot {
@@ -93,6 +101,7 @@ class SawnOff : DriftWeapon replaces Shotgun {
         Weapon.AmmoType1 "Shell";
         Weapon.AmmoUse1 1;
         Weapon.AmmoGive1 8;
+        Inventory.PickupMessage "Got a sawn-off shotgun.";
     }
 
     action state ChamberCheck() {
@@ -196,5 +205,12 @@ class SawnoffWad : MossbergWad {
     // Spreads out immediately.
     default {
         DriftShot.Drift (5,5),0;
+        PackedShot.Submunition "SawnoffPellet",10;
+    }
+}
+
+class SawnoffPellet : MossbergPellet {
+    default {
+        DriftShot.Drift (15,15),0; // WAY harder drift.
     }
 }
