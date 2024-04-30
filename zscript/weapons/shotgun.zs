@@ -59,7 +59,10 @@ class PackedShot : DriftShot {
             vector2 spread = RotateVector((frandom(i,i*0.5) * 0.1,0),frandom(0,360));
             let b = Spawn(projectile,pos);
             b.target = target;
-            b.Vel3DFromAngle(vel.length(),angle+spread.x,-(pitch+spread.y));
+            b.tracer = tracer;
+            // if (tracer) console.printf("Tracer? %s, %s",tracer,b.tracer);
+            b.master = master; // Transfer all pointers, just in case!
+            b.Vel3DFromAngle(vel.length()+b.speed,angle+spread.x,-(pitch+spread.y));
         }
 
         SetState(ResolveState("Death"));
