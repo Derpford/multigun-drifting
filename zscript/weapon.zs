@@ -129,7 +129,9 @@ class DriftShot : FastProjectile {
         }
 
         if (!bNOGRAVITY) {
-            vel.z -= GetGravity() / (vel.length() * 0.1);
+            double ln = max(1,vel.length() * 0.1);
+            if (ln != ln) ln = 1; // NaN check
+            vel.z -= GetGravity() / ln;
         }
     }
 
