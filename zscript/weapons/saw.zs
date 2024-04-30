@@ -10,6 +10,7 @@ class SquadAutoWeapon : DriftWeapon replaces Chaingun {
         DriftWeapon.Sway 1,1.1;
         DriftWeapon.Flip 3,1;
         DriftWeapon.Shot "UMPShot","weapons/m60f";
+        Inventory.PickupMessage "Got the Squad Automatic Weapon!";
     }
 
     action void FireSAW() {

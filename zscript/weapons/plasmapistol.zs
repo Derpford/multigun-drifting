@@ -1,4 +1,4 @@
-class PlasmaPistol : DriftWeapon {
+class PlasmaPistol : DriftWeapon replaces Chainsaw {
     // Fires a bolt of plasma.
     // Powered off a fuel cell that will live longer than you do,
     // but its power output is limited, so the capacitors need to be
@@ -11,6 +11,7 @@ class PlasmaPistol : DriftWeapon {
         DriftWeapon.Sway 0.5,1;
         DriftWeapon.Shot "PlasBolt","weapons/plasmaf";
         DriftWeapon.Flip 4,0.5;
+        Inventory.PickupMessage "Got a plasma sidearm.";
     }
 
     override void DoEffect() {

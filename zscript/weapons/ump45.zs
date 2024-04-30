@@ -1,4 +1,4 @@
-class UMP45 : DriftWeapon {
+class UMP45 : DriftWeapon replaces Pistol {
     // A PDW with a high rate of fire, and a correspondingly high damage output.
     // However, it has a wider sway than your plasma pistol, and it's harder to control.
 
@@ -7,8 +7,10 @@ class UMP45 : DriftWeapon {
         DriftWeapon.Sway 0.8,1;
         Weapon.AmmoType1 "Clip";
         Weapon.AmmoUse1 1;
+        Weapon.AmmoGive1 60;
         DriftWeapon.Flip 12,3;
         DriftWeapon.Shot "UMPShot","ump/fire";
+        Inventory.PickupMessage "Got a UMP45.";
     }
 
     action void FireUMP() {
