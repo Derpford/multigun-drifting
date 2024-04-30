@@ -85,8 +85,6 @@ class DriftPlayer : DoomPlayer {
             }
         } else if (storedspd > 0 && drift == drift && inputangle == inputangle && drift.length() > 0) {
             // We've uncrouched. Release the speed.
-            console.printf("Released speed: %0.1f, momentum: %0.1f",storedspd, momentum);
-            console.printf("Final drift length: %0.1f",drift.length());
 
             if (momentum != momentum) {
                 momentum = 0; //Oops, math ate your momentum.
@@ -109,7 +107,6 @@ class DriftPlayer : DoomPlayer {
             swayampdelta = damp(swayamp,swayampdelta,spdmod,0);
             swayamp += swayampdelta;
             sway = sin(GetAge() * swayspeed) * (swayamp * wep.swayfactor);
-            console.printf("Player sway: %0.1f (%0.1f)",sway,swayamp);
         }
     }
 
