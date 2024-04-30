@@ -4,6 +4,9 @@ class DriftWeapon : Weapon abstract {
     double swayfactor, swayspeed;
     Property Sway : swayfactor, swayspeed; // How much this weapon is affected by sway!
 
+    double driftfactor;
+    Property DriftFac: driftfactor; // How much this weapon's sway is multiplied by while drifting.
+
     Name projectile; // What this gun fires by default.
     String sound;
     Property Shot: projectile,sound;
@@ -17,6 +20,7 @@ class DriftWeapon : Weapon abstract {
         DriftWeapon.Sway 1,1;
         DriftWeapon.Flip 3,1;
         DriftWeapon.Shot "DriftShot","weapons/pistol";
+        DriftWeapon.DriftFac 0.3;
     }
 
     action void Fire(Name proj = "null",Vector2 angles = (0,0),bool ammo = true,vector2 offs = (0,0),int flags = 0) {
