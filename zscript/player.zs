@@ -101,7 +101,9 @@ class DriftPlayer : DoomPlayer {
         double l = max(0.1, vel.length());
         double swayval = l * (l / WALK);
         double swayspeed = (player.readyweapon is "DriftWeapon") ? DriftWeapon(player.readyweapon).swayspeed : 1.0;
-        swayampdelta = damp(swayamp,swayampdelta,vel.length() / WALK,0);
+        double spdmod = vel.length() / WALK;
+        if (storedspd > 0) spdmod *= 0.3;
+        swayampdelta = damp(swayamp,swayampdelta,spdmod,0);
         swayamp += swayampdelta;
         sway = sin(GetAge() * 10 * swayspeed) * 10 * swayamp;
     }
