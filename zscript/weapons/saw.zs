@@ -7,16 +7,17 @@ class SquadAutoWeapon : DriftWeapon replaces Chaingun {
         Weapon.AmmoType1 "Clip";
         Weapon.AmmoUse1 1;
         Weapon.AmmoGive1 60;
-        DriftWeapon.Sway 5.5,4;
-        DriftWeapon.Flip 3,1;
+        DriftWeapon.Sway 3.5,2;
+        DriftWeapon.Flip 2,1;
         DriftWeapon.Shot "UMPShot","weapons/m60f";
         Inventory.PickupMessage "Got the Squad Automatic Weapon!";
     }
 
     action void FireSAW() {
-        double rmax = max(0.3,10 - invoker.mflip) * 0.5;
+        double rmax = max(1.2,0.6 + invoker.mflip) * 0.5;
         vector2 ang = (frandom(-rmax,rmax),0);
         Fire(angles:ang);
+        Fire(angles:ang * 0.3); // Two bullets at once, because reasons!
         A_GunFlash();
     }
 
@@ -36,8 +37,10 @@ class SquadAutoWeapon : DriftWeapon replaces Chaingun {
             Loop;
         
         Fire:
-            CHGG ABA 2 FireSAW();
-            CHGG B 1;
+            CHGG A 2 FireSAW();
+            CHGG B 2;
+            CHGG A 2 FireSAW();
+            CHGG B 2;
             CHGG AB 2 A_Refire();
             CHGG A 0 A_StartSound("weapons/sshoto");
             CHGG AB 3 A_Refire();
@@ -49,8 +52,15 @@ class SquadAutoWeapon : DriftWeapon replaces Chaingun {
             Goto Ready;
 
         Flash:
-            CHGF A Random(0,1) A_Light1();
-            CHGF B Random(0,1) A_Light2();
+            CHGF A Random(0,2) A_Light1();
+            CHGF B Random(0,2) A_Light2();
             Stop;
+    }
+}
+
+class SAWShot : UMPShot {
+    default {
+        DamageFunction (18); // Slightly more powerful.
+        DriftShot.Drift (8,8),512; // Drifts from further out, but drifts harder.
     }
 }
