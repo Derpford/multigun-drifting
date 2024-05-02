@@ -120,7 +120,7 @@ class DudRocket : RocketAmmo {
 
 class RocketFired : DriftShot {
     default {
-        DamageFunction (96);
+        DamageFunction (128);
         Speed 20;
         MissileHeight 12;
         Radius 16;
@@ -165,7 +165,7 @@ class RocketFired : DriftShot {
             Loop;
         
         Death:
-            MISL B 1 Bright A_Explode(128);
+            MISL B 1 Bright A_Explode(256);
             MISL BBBBBCCCCDDD 1 Bright Expand();
             Stop;
     }
