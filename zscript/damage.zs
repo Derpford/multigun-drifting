@@ -1,6 +1,6 @@
 class GlanceBrain : Inventory {
     // Handles modifying damage based on the angle at which an attack connected.
-    const DIRECT = 180.;
+    const DIRECT = 175.;
     const GLANCE = 135.;
     const LOWDMG = 0.5;
     const HIDMG = 2.0;
@@ -25,11 +25,12 @@ class GlanceBrain : Inventory {
             ang = absangle(inf.angle,owner.angleto(inf));
         } else if (src) {
             // It's a melee attack.
-            ang = absangle(inf.angle,angleto(src));
+            ang = absangle(inf.angle,owner.angleto(src));
         }
-        ang = clamp(ang,GLANCE,DIRECT); // 0 means head-on collision, 90 or more means the projectile has either struck the very edge or is behind the target
-        double mult = LOWDMG + ((HIDMG - LOWDMG)/(DIRECT-GLANCE)) * (ang-GLANCE);
+        double clang = clamp(ang,GLANCE,DIRECT); // 0 means head-on collision, 90 or more means the projectile has either struck the very edge or is behind the target
+        double mult = LOWDMG + ((HIDMG - LOWDMG)/(DIRECT-GLANCE)) * (clang-GLANCE);
         newdmg = ceil(dmg * mult);
+        console.printf("%s: Damage from %s was %d (%0.1f = X%0.1f)",owner.GetTag(),inf.GetTag(),newdmg,ang,mult);
     }
 }
 
