@@ -37,8 +37,12 @@ mixin class DampedSpring {
         else if (s - (d*d) / 4.0f > 0.0) // Under Damped
         {
             float w = sqrt(s - (d*d)/4.0f);
-            float j = sqrt(((v + y*(x - c))**2) / (w*w + eps) + ((x - c)**2));
-            float p = atan((v + (x - c) * y) / (-(x - c)*w + eps));
+            double jpart = (w*w + eps) + ((x - c)**2);
+            if (jpart == 0) jpart = eps;
+            float j = sqrt(((v + y*(x - c))**2) / jpart);
+            double ppart = (-(x - c)*w + eps);
+            if (ppart == 0) ppart = eps;
+            float p = atan((v + (x - c) * y) / ppart);
             
             j = (x - c) > 0.0f ? j : -j;
             
