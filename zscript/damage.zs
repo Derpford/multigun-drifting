@@ -25,7 +25,7 @@ class GlanceBrain : Inventory {
             ang = absangle(inf.angle,owner.angleto(inf));
         } else if (src) {
             // It's a melee attack.
-            ang = absangle(inf.angle,owner.angleto(src));
+            ang = absangle(src.angle,owner.angleto(src));
         }
         double clang = clamp(ang,GLANCE,DIRECT); // 0 means head-on collision, 90 or more means the projectile has either struck the very edge or is behind the target
         double mult = LOWDMG + ((HIDMG - LOWDMG)/(DIRECT-GLANCE)) * (clang-GLANCE);
