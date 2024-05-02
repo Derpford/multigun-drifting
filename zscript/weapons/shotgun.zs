@@ -10,6 +10,7 @@ class Mossberg : DriftWeapon replaces SuperShotgun {
         Weapon.AmmoUse1 1;
         Weapon.AmmoGive1 8;
         Weapon.SlotNumber 3;
+        Weapon.SlotPriority 2.0;
         DriftWeapon.Shot "MossbergWad","weapons/shotgf"; // Should fire a 'wad' that later unfolds into a set of 8 pellets.
         Inventory.PickupMessage "Got a pump shotgun.";
     }
@@ -108,6 +109,7 @@ class SawnOff : DriftWeapon replaces Shotgun {
         DriftWeapon.Flip 15,1; // Kicks even harder than the shotgun.
         DriftWeapon.Shot "SawnoffWad","weapons/sshotf";
         Weapon.SlotNumber 3;
+        Weapon.SlotPriority 1.0;
         Weapon.AmmoType1 "Shell";
         Weapon.AmmoUse1 1;
         Weapon.AmmoGive1 8;
