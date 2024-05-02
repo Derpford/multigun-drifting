@@ -60,12 +60,19 @@ class PackedShot : DriftShot {
             let b = Spawn(projectile,pos);
             b.target = target;
             b.tracer = tracer;
-            // if (tracer) console.printf("Tracer? %s, %s",tracer,b.tracer);
             b.master = master; // Transfer all pointers, just in case!
+            b.angle = angle;
+            b.pitch = pitch; // Also transfer angles, d'oh
             b.Vel3DFromAngle(vel.length()+b.speed,angle+spread.x,-(pitch+spread.y));
         }
 
-        SetState(ResolveState("Death"));
+        SetState(ResolveState("Spent"));
+    }
+
+    states {
+        Spent:
+            TNT1 A 0;
+            Stop;
     }
 }
 

@@ -100,7 +100,21 @@ class RocketLobbed : PackedShot {
 
     states {
         Spawn:
+            MISL A 1;
+            Loop;
+        Death:
+            MISL A 5;
+            MISL A 0 A_SpawnItemEX("DudRocket");
+            Goto Spent;
+
+    }
+}
+
+class DudRocket : RocketAmmo {
+    states {
+        Spawn:
             MISL A -1;
+            Stop;
     }
 }
 
