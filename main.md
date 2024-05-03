@@ -31,3 +31,17 @@ Press and hold the crouch button while moving faster than walking speed, and you
 Upon releasing the crouch button, you'll unleash the stored speed plus the momentum in whatever direction you input, enabling super-fast cornering. In addition, since you slow to walk speed while drifting, you'll fire way more accurately! This can also give you a big burst of speed for a short distance. However, drifting slows you down--and it slows you down a *lot* if you hold it forever. There's a point at which you can't store any more momentum, and it's around the time you stop moving entirely.
 
 # Weapons
+
+TODO: Weapon descriptions.
+
+# Armor
+
+Instead of finding and discarding whole pieces of armor, you're actually finding armor plates for your plate carrier. There's still only two kinds of armor: green for kevlar-lined steel, and blue for ceramic.
+
+You can carry up to two plates of each type. One plate of each type will be used at a time. All plates provide 50% save percent.
+
+Steel (green) armor plates additionally absorb up to a flat 10 damage from each attack, which is great against glancing blows from hitscan attacks. Each one absorbs up to 75 points of damage before breaking.
+
+Ceramic (blue) armor plates absorb up to 60 points of damage as flat absorption, and have a durability of 150. Due to absorbing so much flat damage, this doesn't last as long as you might think.
+
+Having plates of both types at the same time absorbs a *lot* of damage and makes ceramic plates last a while longer.
