@@ -150,6 +150,24 @@ class SawnOff : DriftWeapon replaces Shotgun {
         return ResolveState("Click");
     }
 
+    action void ShotgunNoises(int which) {
+        switch (which) {
+            case 0:
+                A_StartSound("weapons/sshoto");
+                break;
+            case 1:
+                A_StartSound("weapons/sshotl");
+                break;
+            case 2:
+                A_StartSound("weapons/sshotc");
+                break;
+            default:
+                // No noises!
+                break;
+        }
+        A_WeaponReady(WRF_NOFIRE);
+    }
+
     states {
         Spawn:
             SGN2 A -1;
@@ -202,13 +220,13 @@ class SawnOff : DriftWeapon replaces Shotgun {
                     return ResolveState("Ready");
                 }
             }
-            SHT2 BC 6;
-            SHT2 D 6 A_StartSound("weapons/sshoto");
-            SHT2 E 6;
-            SHT2 F 6 A_StartSound("weapons/sshotl");
-            SHT2 G 5;
-            SHT2 H 5 A_StartSound("weapons/sshotc");
+            SHT2 BC 4 ShotgunNoises(-1);
+            SHT2 D 4 ShotgunNoises(0);
+            SHT2 E 8 ShotgunNoises(-1);
+            SHT2 F 4 ShotgunNoises(1);
+            SHT2 G 8 ShotgunNoises(-1);
             SHT2 A 0 ChamberLoad();
+            SHT2 H 8 ShotgunNoises(2);
             Goto Ready;
     }
 }
