@@ -184,7 +184,14 @@ class DriftPlayer : DoomPlayer {
                     jumpvelz *= 2.0;
                 }
 
+                double inputangle = angle;
+                double side = GetPlayerInput(INPUT_SIDEMOVE);
+                double forward = GetPlayerInput(INPUT_FORWARDMOVE);
+                vector2 inputs = (forward,-side).unit();
+                inputs = RotateVector(inputs,inputangle);
+
 				Vel.Z += jumpvelz;
+                vel.xy = vel.xy + ( inputs.unit() * 1 );
 				bOnMobj = false;
 				// player.jumpTics = -1; // Bunnyhopping :D
 				if (!(player.cheats & CF_PREDICTING)) A_StartSound("*jump", CHAN_BODY);
