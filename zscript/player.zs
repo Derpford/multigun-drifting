@@ -64,8 +64,8 @@ class DriftPlayer : DoomPlayer {
         if (btns & BT_CROUCH) {
             // Engage dorifto.
             if (storedspd < 0) {
-                storedspd = vel.length();
-                drift = inputs.unit() == inputs.unit() ? inputs.unit() * vel.length() : (1,0) * vel.length();
+                storedspd = max(vel.length(), 1);
+                drift = inputs.unit() == inputs.unit() ? inputs.unit() * vel.length() : (1,0) * storedspd;
                 driftangle = angle;
             } else { // On everything after the first tick of drift...
                 if (player.onground) {

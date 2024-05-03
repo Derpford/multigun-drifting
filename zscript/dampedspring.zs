@@ -15,7 +15,7 @@ mixin class DampedSpring {
         float stiffness, 
         float damping, 
         float dt, 
-        float eps = 1e-5f)
+        float eps = 1e-4)
     {
         float g = x_goal;
         float q = v_goal;
@@ -37,11 +37,16 @@ mixin class DampedSpring {
         else if (s - (d*d) / 4.0f > 0.0) // Under Damped
         {
             float w = sqrt(s - (d*d)/4.0f);
-            double jpart = (w*w + eps) + ((x - c)**2);
-            if (jpart == 0) jpart = eps;
-            float j = sqrt(((v + y*(x - c))**2) / jpart);
+            double jpart1 = (w*w + eps) + ((x - c)**2);
+            double jpart2 = ((v + y*(x - c))**2);
+            double jp3 = 0;
+            if (jpart1 == jpart1 && jpart1 != 0) { jp3 = jpart2 / jpart1; } 
+            double j = 0;
+            if (jp3 != 0) {
+                j = sqrt(jp3);
+            }
             double ppart = (-(x - c)*w + eps);
-            if (ppart == 0) ppart = eps;
+            if (ppart == 0 || ppart != ppart) ppart = eps;
             float p = atan((v + (x - c) * y) / ppart);
             
             j = (x - c) > 0.0f ? j : -j;
