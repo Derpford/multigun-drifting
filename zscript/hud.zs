@@ -161,12 +161,11 @@ class DriftHud : DoomStatusBar {
 
     void DrawArmorState(DriftArmor arm, vector2 pos, Name tex) {
         if (arm) {
-            int maxsave = GetDefaultByType(arm.GetClass()).SaveAmount;
             switch (arm.amount) {
                 case 2:
                     DrawImage(tex,pos-(0,4),DI_SCREEN_LEFT_BOTTOM|DI_ITEM_CENTER);
                 case 1:
-                    DrawBar(tex,"ARMBACK",arm.SaveAmount,maxsave,pos,0,SHADER_VERT,DI_SCREEN_LEFT_BOTTOM|DI_ITEM_CENTER);
+                    DrawBar(tex,"ARMBACK",arm.SaveAmount,arm.savemax,pos,0,SHADER_VERT,DI_SCREEN_LEFT_BOTTOM|DI_ITEM_CENTER);
                 default:
                     break; // Don't draw armor items by default.
             }

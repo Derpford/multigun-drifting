@@ -45,3 +45,7 @@ Steel (green) armor plates additionally absorb up to a flat 10 damage from each 
 Ceramic (blue) armor plates absorb up to 60 points of damage as flat absorption, and have a durability of 150. Due to absorbing so much flat damage, this doesn't last as long as you might think.
 
 Having plates of both types at the same time absorbs a *lot* of damage and makes ceramic plates last a while longer.
+
+Armor bonuses are replaced by Armor Repair Bonuses, which--instead of immediately adding their value--provide armor regen over time. Note that a sufficiently powerful attack can still break a plate outright, even if you have repair bonuses in your inventory.
+
+Megaspheres give 200 units of Armor Repair Bonus instead of blue armor.

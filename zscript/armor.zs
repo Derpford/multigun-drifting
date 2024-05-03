@@ -1,8 +1,9 @@
 class DriftArmor : Armor {
     int saveamount;
+    int savemax;
     int maxfullabsorb;
     double savepercent;
-    Property SaveAmount: saveamount;
+    Property SaveAmount: savemax;
     Property FlatAbsorb: maxfullabsorb;
     Property SavePercent: savepercent;
     default {
@@ -11,6 +12,11 @@ class DriftArmor : Armor {
         DriftArmor.SaveAmount 150;
         DriftArmor.SavePercent 0.5;
         DriftArmor.FlatAbsorb 20;
+    }
+
+    override void PostBeginPlay() {
+        super.PostBeginPlay();
+        saveamount = savemax;
     }
 
     override void AbsorbDamage (int dmg, Name mod, out int newdmg, Actor inf, Actor src, int flags) {
@@ -28,7 +34,7 @@ class DriftArmor : Armor {
         // Finally, subtract absorbed from our saveamount. If saveamount <= 0, reset it to default and take one plate.
         saveamount -= absorbed;
         if (saveamount <= 0) {
-            saveamount = GetDefaultByType(GetClass()).saveamount;
+            saveamount = savemax;
             owner.TakeInventory(self.GetClassName(),1);
         }
     }
@@ -64,5 +70,46 @@ class DriftBlueArmor : DriftArmor replaces BlueArmor {
             ARM2 A 3;
             ARM2 B 3 Bright;
             Loop;
+    }
+}
+
+class ArmorRepairBonus : Inventory replaces ArmorBonus {
+    // Slowly restores your current armor, prioritizing steel.
+
+    default {
+        Inventory.Amount 2;
+        Inventory.MaxAmount 1000; // For all intents and purposes, you'll probably never hit this cap.
+        Inventory.PickupMessage "Got an armor repair bonus.";
+    }
+
+    override void DoEffect() {
+        Super.DoEffect();
+        if (amount > 0 && GetAge() % 5 == 0) {
+
+            DriftArmor arm1 = DriftArmor(owner.FindInventory("DriftGreenArmor"));
+            DriftArmor arm2 = DriftArmor(owner.FindInventory("DriftBlueArmor"));
+
+            if (arm1 && arm1.saveamount < arm1.savemax) {
+                arm1.saveamount++;
+                amount--;
+            } else if (arm2 && arm2.saveamount < arm2.savemax) {
+                arm2.saveamount++;
+                amount--;
+            }
+        }
+    }
+
+    states {
+        Spawn:
+            BON2 ABCDCB 3;
+            Loop;
+    }
+}
+
+class DriftMega : Megasphere replaces Megasphere {
+    states {
+        Pickup:
+            TNT1 A 0 A_GiveInventory("ArmorRepairBonus",200);
+            TNT1 A 0 A_GiveInventory("MegasphereHealth",1);
     }
 }
