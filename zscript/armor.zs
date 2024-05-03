@@ -44,7 +44,7 @@ class DriftGreenArmor : DriftArmor replaces GreenArmor {
     // A set of plates for your plate carrier.
     default {
         Inventory.PickupMessage "Got a steel armor plate.";
-        DriftArmor.SaveAmount 75;
+        DriftArmor.SaveAmount 200;
         DriftArmor.FlatAbsorb 10; // Takes bullets with relative ease.
     }
 
@@ -61,7 +61,7 @@ class DriftBlueArmor : DriftArmor replaces BlueArmor {
     // A ceramic plate for your plate carrier. Blocks a larger chunk of initial damage.
     default {
         Inventory.PickupMessage "Got a ceramic armor plate.";
-        DriftArmor.SaveAmount 150;
+        DriftArmor.SaveAmount 100;
         DriftArmor.FlatAbsorb 60; // Wears out pretty fast, to be honest...
     }
 
@@ -77,7 +77,7 @@ class ArmorRepairBonus : Inventory replaces ArmorBonus {
     // Slowly restores your current armor, prioritizing steel.
 
     default {
-        Inventory.Amount 2;
+        Inventory.Amount 3;
         Inventory.MaxAmount 1000; // For all intents and purposes, you'll probably never hit this cap.
         Inventory.PickupMessage "Got an armor repair bonus.";
     }

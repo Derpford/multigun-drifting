@@ -40,9 +40,9 @@ Instead of finding and discarding whole pieces of armor, you're actually finding
 
 You can carry up to two plates of each type. One plate of each type will be used at a time. All plates provide 50% save percent.
 
-Steel (green) armor plates additionally absorb up to a flat 10 damage from each attack, which is great against glancing blows from hitscan attacks. Each one absorbs up to 75 points of damage before breaking.
+Steel (green) armor plates additionally absorb up to a flat 10 damage from each attack, which is great against glancing blows from hitscan attacks. Each one absorbs up to 200 points of damage before breaking.
 
-Ceramic (blue) armor plates absorb up to 60 points of damage as flat absorption, and have a durability of 150. Due to absorbing so much flat damage, this doesn't last as long as you might think.
+Ceramic (blue) armor plates absorb up to 60 points of damage as flat absorption, and have a durability of 100. Due to absorbing so much flat damage, this doesn't last long, but it can save your life.
 
 Having plates of both types at the same time absorbs a *lot* of damage and makes ceramic plates last a while longer.
 
