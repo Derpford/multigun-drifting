@@ -144,10 +144,33 @@ class DriftHud : DoomStatusBar {
         
         // rangefinder
         double rangefind = plr.rangefind;
-        DrawString(mConFont,FormatNumber(rangefind,4,format:FNF_FILLZEROS),(0,16),DI_SCREEN_CENTER|DI_TEXT_ALIGN_CENTER);
+        DrawString(mConFont,FormatNumber(rangefind,4,format:FNF_FILLZEROS),(0,32),DI_SCREEN_CENTER|DI_TEXT_ALIGN_CENTER);
 
         // speedometer
         double spd = plr.vel.length();
-        DrawString(mConFont,String.Format("%0.1f",spd),(0,32),DI_SCREEN_CENTER|DI_TEXT_ALIGN_CENTER);
+        DrawString(mConFont,String.Format("%0.1f",spd),(0,-64),DI_SCREEN_CENTER_BOTTOM|DI_TEXT_ALIGN_CENTER,Font.CR_CYAN);
+
+        // Draw armor state.
+        DriftArmor steelplate = DriftArmor(plr.FindInventory("DriftGreenArmor"));
+        DriftArmor ceramic = DriftArmor(plr.FindInventory("DriftBlueArmor"));
+        vector2 armpos1 = (32,-32);
+        vector2 armpos2 = (64,-32);
+        DrawArmorState(steelplate,armpos1,"ARM1A0");
+        DrawArmorState(ceramic,armpos2,"ARM2A0");
+    }
+
+    void DrawArmorState(DriftArmor arm, vector2 pos, Name tex) {
+        if (arm) {
+            int maxsave = GetDefaultByType(arm.GetClass()).SaveAmount;
+            switch (arm.amount) {
+                case 2:
+                    DrawImage(tex,pos-(0,4),DI_SCREEN_LEFT_BOTTOM|DI_ITEM_CENTER);
+                case 1:
+                    DrawBar(tex,"ARMBACK",arm.SaveAmount,maxsave,pos,0,SHADER_VERT,DI_SCREEN_LEFT_BOTTOM|DI_ITEM_CENTER);
+                default:
+                    break; // Don't draw armor items by default.
+            }
+        }
+
     }
 }
