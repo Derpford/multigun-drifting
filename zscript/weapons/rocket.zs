@@ -121,7 +121,7 @@ class DudRocket : RocketAmmo {
 class RocketFired : DriftShot {
     default {
         DamageFunction (128);
-        Speed 20;
+        Speed 10;
         MissileHeight 12;
         Radius 16;
         Height 16;
@@ -151,7 +151,7 @@ class RocketFired : DriftShot {
             console.printf("vel multiplier: %0.1f",mult);
             vel += to.unit() * mult * vel.length() * 1./35.;
         } else {
-            vel += vel.unit() * 1 * 1./35.;
+            vel += vel.unit() * 0.5 * 1./35.;
         }
     }
 
