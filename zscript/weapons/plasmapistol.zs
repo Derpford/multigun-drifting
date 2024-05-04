@@ -4,6 +4,9 @@ class PlasmaPistol : DriftWeapon replaces Chainsaw {
     // but its power output is limited, so the capacitors need to be
     // filled in order to fire.
 
+    int shots;
+    Property StartShots: shots;
+
     default {
         Weapon.AmmoType1 "Capacitor";
         Weapon.AmmoUse1 1;
@@ -12,12 +15,38 @@ class PlasmaPistol : DriftWeapon replaces Chainsaw {
         DriftWeapon.Shot "PlasBolt","weapons/plasmaf";
         DriftWeapon.Flip 4,0.5;
         DriftWeapon.DriftFac 0.1; // Much more useful while drifting!
+        PlasmaPistol.StartShots 1;
         Inventory.PickupMessage "Got a plasma sidearm.";
     }
 
+    override String PickupMessage() {
+        if (bAMBUSH) return "Scrapped a plasma sidearm. (Plasma Pistol upgraded!)";
+        else return pickupmsg;
+    }
+
     override void DoEffect() {
-        if (owner.player.readyweapon is self.GetClassName() && GetAge() % 35 == 0 && !(GetPlayerInput(INPUT_BUTTONS) & BT_ATTACK)) {
+        if (GetAge() % 35 == 0 && !(GetPlayerInput(INPUT_BUTTONS) & BT_ATTACK)) {
             owner.GiveInventory("Capacitor",1);
+        }
+    }
+
+    override bool HandlePickup(Inventory other) {
+        // Picking up duplicate plasma sidearms increases the capacitor's...capacity,
+        // and also increases the power/ammo usage of your shots.
+        if (other is self.GetClass()) {
+            other.bPICKUPGOOD = true;
+            other.bAMBUSH = true; // Used to indicate that the other item was picked up for scrap.
+            int cap = owner.GetAmmoCapacity("Capacitor");
+            owner.SetAmmoCapacity("Capacitor",cap+10);
+            shots++;
+            return true;
+        }
+        return false;
+    }
+
+    action void FirePistol() {
+        for (int i = 0; i < invoker.shots; i++) {
+            Fire();
         }
     }
 
@@ -37,7 +66,7 @@ class PlasmaPistol : DriftWeapon replaces Chainsaw {
             Loop;
         
         Fire:
-            PISG B 4 Fire();
+            PISG B 4 FirePistol();
             PISG C 3;
             PISG C 0 A_Refire();
             Goto Ready;
