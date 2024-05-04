@@ -20,6 +20,7 @@ class DriftPlayer : DoomPlayer {
         Player.StartItem "PlasmaPistol";
         Player.StartItem "Capacitor",20;
         Player.StartItem "Clip",50;
+        Player.StartItem "DriftGreenArmor";
     }
 
     override void PostBeginPlay() {
