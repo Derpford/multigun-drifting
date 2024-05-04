@@ -14,7 +14,7 @@ class GlanceBrain : Inventory {
         if (!passive) {return;}
         // If there's no inflictor or source, don't modify the damage.
         // Likewise, if this is explosive damage (i.e., Vile fire), don't bother.
-        if ((flags & DMG_EXPLOSION) || (!inf && !src) || (inf == src)) { newdmg = dmg; console.printf("Skipped"); return; }
+        if ((flags & DMG_EXPLOSION) || (!inf && !src)) { newdmg = dmg; return; }
         double ang;
         if (inf) {
             // It's a projectile or puff.
