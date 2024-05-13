@@ -19,6 +19,19 @@ class DriftArmor : Armor {
         saveamount = savemax;
     }
 
+    override bool HandlePickup(Inventory other) {
+        if (other is self.GetClass()) {
+            // Specifically when picking up a duplicate...
+            if (amount == maxamount && saveamount < savemax) {
+                // If we can't pick up any more, cannibalize the duplicate to fix this one up.
+                saveamount = savemax;
+                other.bPICKUPGOOD = true;
+                return true; // It's handled.
+            }
+        }
+        return super.HandlePickup(other);
+    }
+
     override void AbsorbDamage (int dmg, Name mod, out int newdmg, Actor inf, Actor src, int flags) {
         int absorbed;
         newdmg = dmg;
