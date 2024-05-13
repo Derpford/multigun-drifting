@@ -50,7 +50,7 @@ class DriftGreenArmor : DriftArmor replaces GreenArmor {
 
     states {
         Spawn:
-            ARM1 A 3;
+            ARM1 A 6;
             ARM1 B 3 Bright;
             Loop;
     }
@@ -67,7 +67,7 @@ class DriftBlueArmor : DriftArmor replaces BlueArmor {
 
     states {
         Spawn:
-            ARM2 A 3;
+            ARM2 A 6;
             ARM2 B 3 Bright;
             Loop;
     }
