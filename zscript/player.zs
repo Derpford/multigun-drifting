@@ -21,6 +21,7 @@ class DriftPlayer : DoomPlayer {
         Player.StartItem "Capacitor",20;
         Player.StartItem "Clip",50;
         Player.StartItem "DriftGreenArmor";
+        Player.StartItem "HealthBottle";
     }
 
     override void PostBeginPlay() {

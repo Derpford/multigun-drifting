@@ -150,6 +150,12 @@ class DriftHud : DoomStatusBar {
         double spd = plr.vel.length();
         DrawString(mConFont,String.Format("%0.1f",spd),(0,-64),DI_SCREEN_CENTER_BOTTOM|DI_TEXT_ALIGN_CENTER,Font.CR_CYAN);
 
+        // health bottle
+        HealthBottle hb = HealthBottle(plr.FindInventory("HealthBottle"));
+        if (hb) {
+            DrawString(mConFont,String.Format("%d",hb.healing),(96,-16),DI_SCREEN_LEFT_BOTTOM|DI_TEXT_ALIGN_LEFT,Font.CR_BRICK);
+        }
+
         // Draw armor state.
         DriftArmor steelplate = DriftArmor(plr.FindInventory("DriftGreenArmor"));
         DriftArmor ceramic = DriftArmor(plr.FindInventory("DriftBlueArmor"));
