@@ -133,14 +133,12 @@ class SawnOff : DriftWeapon replaces Shotgun {
     action state FireChamber(bool which) { // if false, fires chamber1. Otherwise, fires chamber2.
         if (!which) {
             if (!invoker.chamber1 && invoker.DepleteAmmo(false)) {
-                console.printf("Fire chamber1");
                 invoker.chamber1 = true;
                 Fire(ammo:false,offs:(-2,0));
                 return ResolveState(null);
             }
         } else {
             if (!invoker.chamber2 && invoker.DepleteAmmo(false)) {
-                console.printf("Fire chamber2");
                 invoker.chamber2 = true;
                 Fire(ammo:false,offs:(2,0));
                 return ResolveState(null);

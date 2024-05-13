@@ -148,7 +148,6 @@ class RocketFired : DriftShot {
             vector3 to = Vec3To(tracer);
             double mult = (vel.unit() dot to.unit());
             mult = MapRange(mult,(1,0),(1.1,10));
-            console.printf("vel multiplier: %0.1f",mult);
             vel += to.unit() * mult * vel.length() * 1./35.;
         } else {
             vel += vel.unit() * 0.5 * 1./35.;
