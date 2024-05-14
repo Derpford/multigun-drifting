@@ -1,6 +1,9 @@
 class DriftArmor : Armor {
     int saveamount;
     int savemax;
+    int recentdmg; // PRNG for armor breaking
+    int durabilityCheck; // How high does the roll have to be in order to reduce durability?
+    Property DurCheck: durabilityCheck;
     int maxfullabsorb;
     double savepercent;
     Property SaveAmount: savemax;
@@ -11,7 +14,8 @@ class DriftArmor : Armor {
         Inventory.Amount 1;
         DriftArmor.SaveAmount 150;
         DriftArmor.SavePercent 0.5;
-        DriftArmor.FlatAbsorb 20;
+        DriftArmor.FlatAbsorb 0;
+        DriftArmor.DurCheck 50;
     }
 
     override void PostBeginPlay() {
@@ -44,12 +48,23 @@ class DriftArmor : Armor {
         int partabs = ceil(double(newdmg) * savepercent); // 1-point ticks are fully absorbed, Q2-style
         absorbed += partabs;
         newdmg -= partabs;
-        // Finally, subtract absorbed from our saveamount. If saveamount <= 0, reset it to default and take one plate.
-        saveamount -= absorbed;
-        if (saveamount <= 0) {
-            saveamount = savemax;
-            owner.TakeInventory(self.GetClassName(),1);
+        // Finally, check armor depletion. If saveamount <= 0, reset it to default and take one plate.
+        if (frandom(0,absorbed)+recentdmg > durabilitycheck * (double(saveamount)/double(savemax))) {
+            // Essentially: more damage means higher, but not guaranteed, chance of doing durability damage.
+            // Lower current durability means higher chance of passing the check.
+            saveamount -= ceil(absorbed/10.);
+            if (saveamount <= 0) {
+                saveamount = savemax;
+                owner.TakeInventory(self.GetClassName(),1);
+            }
+        } else {
+            recentdmg += dmg; 
         }
+    }
+
+    override void Tick() {
+        Super.Tick();
+        recentdmg = max(0,recentdmg--);
     }
 }
 
@@ -57,8 +72,9 @@ class DriftGreenArmor : DriftArmor replaces GreenArmor {
     // A set of plates for your plate carrier.
     default {
         Inventory.PickupMessage "Got a steel armor plate.";
-        DriftArmor.SaveAmount 200;
-        DriftArmor.FlatAbsorb 10; // Takes bullets with relative ease.
+        DriftArmor.SaveAmount 100;
+        DriftArmor.SavePercent 0.4;
+        DriftArmor.DurCheck 75;
     }
 
     states {
@@ -74,8 +90,9 @@ class DriftBlueArmor : DriftArmor replaces BlueArmor {
     // A ceramic plate for your plate carrier. Blocks a larger chunk of initial damage.
     default {
         Inventory.PickupMessage "Got a ceramic armor plate.";
-        DriftArmor.SaveAmount 100;
-        DriftArmor.FlatAbsorb 60; // Wears out pretty fast, to be honest...
+        DriftArmor.SaveAmount 50;
+        DriftArmor.SavePercent 0.6;
+        DriftArmor.DurCheck 20;
     }
 
     states {
