@@ -32,17 +32,65 @@ Upon releasing the crouch button, you'll unleash the stored speed plus the momen
 
 # Weapons
 
-TODO: Weapon descriptions.
+## Plasma Pistol
+The UAC-20 Personal Plasma Weapon is a roughly pistol-sized self-charging energy weapon. Its power output isn't great compared to other plasma weaponry; however, its real benefit lies in logistics. Commonly issued to both security guards and commandos, the UAC-20 PPW has saved lives in both combat and long-term survival situations, while saving the UAC massive amounts of money on ammunition manufacturing.
+
+The PPW's core components actually don't take up much space inside the device; this has led some users to perform aftermarket modifications, hooking up the self-charging capacitors in parallel to drive more current through the projection coils. This effectively creates a hyperburst-like effect, causing the PPW to fire multiple plasma bolts in an infinitesimal period of time. However, the power draw outscales the charge rate of the extra capacitors, making modified PPWs prone to running dry faster.
+
+Press primary fire to fire the Plasma Pistol. Ammunition recharges automatically over time. Pick up additional Plasma Pistols to improve charge capacity and damage output.
+
+## SMG
+Supposedly, this PDW's design was based on an old classic, which the UAC bought all the rights to shortly after making a mint via their teleporter technology. The UAC MP-10 is chambered in the UAC's 10mm armor-piercing round--the same one used in their Squad Automatic Weapon--and thus brings a mixture of power and ease-of-use to the table, while easily accepting the most common ammunition in UAC facilities. A must-have for anyone operating in the ruins of the UAC's facilities.
+
+Primary fire to fire. Short, controlled bursts are key.
+
+## Sawn-Off Shotgun
+There are a million of these, in various forms, made by various companies, modified by amateur gunsmiths across the solar system. Good luck finding any specific details.
+
+Primary fire to fire the left barrel, alternate fire to fire the right barrel. You can fire both barrels basically at the same time. Press Reload to load fresh shells early. You can cancel out of the reload animation by switching weapons.
+
+Note that the buckshot starts spreading almost instantly, but there's a "sweet spot" right in front of the barrels where the shot hasn't spread out--leading to better damage on a single target. This thing can gib most human-size enemies with ease.
+
+## Pump Shotgun
+The Benellus 12 has been manufactured as long as anybody can remember. Supposedly, Benellus himself has been alive for hundreds of years, but this is probably just someone in the marketing team who thinks he's clever. There can't really be a god of shotguns, right?
+
+Primary fire to fire. It fires faster than you might expect, though you'll want to time the shots carefully if you're firing on the move. The longer barrel and tighter choke on this weapon makes it more accurate at longer ranges, while still packing a lot of stopping power in close quarters. This is your workhorse.
+
+## Squad Automatic Weapon
+The GAU-6 Squad Automatic Weapon--or as the UAC designates it, the UAC-30 Chaingun--is a lead-spitting beast. Boasting six barrels, synchronized to fire two at once, it has an effective rate of fire beyond almost anything else in production today while *also* avoiding overheating issues. Its recoil can be difficult to control, but the volume of fire you can put out with this thing makes up for it.
+
+Primary fire to fire. Spread increases as you hold down the trigger, similar to the SMG. Chews through ammo and demons in equal measure.
+
+## Rocket Launcher
+The UAC developed a high-end man-portable antitank weapon shortly after the portal storms started hitting. While the UAC was being picked apart and sold to the highest bidder during the collapse of society, their laser-guided RPG prototype was quietly scooped up by the remnants of Earth's organized militaries, and once it saw full deployment, it had a dramatic effect on the war against the demons.
+
+Primary fire to fire. The rocket will be lobbed out the front of the launcher; if it hits something before the rocket motor ignites, it'll fall to the ground and can be collected. Don't underestimate how much getting bonked in the face with a rocket hurts.
+
+Once it ignites, it'll beeline for wherever the laser pointer is pointing. Note that the laser pointer is pointing wherever the rocket launcher is pointing, which means that if you're at a dead sprint, it might be pointing way off to the side.
+
+The rocket launcher does a massive amount of splash damage, not to mention that it's more likely to land a direct hit on target due to the laser guidance. Rockets are powerful. Note that you can fire and guide many rockets at once.
+
+## Pulse Rifle
+An experimental prototype energy weapon using the UAC's ultradense energy storage tech. Unlike the Plasma Pistol, this thing can't self-charge--it's actually using an older version of the UAC's power tech. The pulse rifle program was scrapped when the teleporters took off, and was buried even deeper once the UAC figured out that they'd stumbled on free energy too. A shame; this thing hits really hard, and if they'd worked out the heat problems, it could have been the standard infantry rifle of the future.
+
+Primary fire to fire. Holding down the trigger gradually heats the weapon up, causing it to fire more slowly. It'll cool off over time, whether it's in your hands, in your inventory, or on the ground. The more white steam particles are coming off of this thing, the hotter it is.
 
 # Armor
 
 Instead of finding and discarding whole pieces of armor, you're actually finding armor plates for your plate carrier. There's still only two kinds of armor: green for kevlar-lined steel, and blue for ceramic.
 
-You can carry up to two plates of each type. One plate of each type will be used at a time. All plates provide 50% save percent.
+You can carry up to two plates of each type. One plate of each type will be used at a time.
 
-Steel (green) armor plates additionally absorb up to a flat 10 damage from each attack, which is great against glancing blows from hitscan attacks. Each one absorbs up to 200 points of damage before breaking.
+Steel plates provide 40% damage resistance until they break, and can take a lot of punishment. Ceramic plates provide 60% damage resistance, but break significantly faster.
 
-Ceramic (blue) armor plates absorb up to 60 points of damage as flat absorption, and have a durability of 100. Due to absorbing so much flat damage, this doesn't last long, but it can save your life.
+Plates lose durability according to the following process:
+- First, roll a random number between zero and the absorbed damage. Add the 'recent damage' variable to this number.
+- If that total is higher than the armor's "durability check" value (75 for green armor, 20 for blue armor)...
+    - Take durability equal to 1/10th of the damage that was absorbed.
+    - If durability drops to zero or less, remove one plate and reset durability to full. (Durability loss doesn't "roll over" to the next plate.)
+- Otherwise...
+    - Add the damage of the attack to the "recent damage" variable.
+- The "recent damage" variable ticks down at a rate of 35/second, and basically ensures that you can't just stand in front of a chaingunner and not take any armor damage.
 
 Having plates of both types at the same time absorbs a *lot* of damage and makes ceramic plates last a while longer.
 
