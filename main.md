@@ -97,3 +97,6 @@ Having plates of both types at the same time absorbs a *lot* of damage and makes
 Armor bonuses are replaced by Armor Repair Bonuses, which--instead of immediately adding their value--provide armor regen over time. Note that a sufficiently powerful attack can still break a plate outright, even if you have repair bonuses in your inventory.
 
 Megaspheres give 200 units of Armor Repair Bonus instead of blue armor.
+
+# Healing
+Leftover health from healing items gets stocked up in your Health Bottle, a handy device that automatically heals you over time. The rate at which healing is applied is based on your current health and the amount of healing stocked in your bottle; lower health, and more in reserve, means faster healing rate.
