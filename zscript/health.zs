@@ -3,6 +3,10 @@ class HealthBottle : Inventory {
     // Any overflow healing goes into the HealthBottle, and applies over time.
 
     int healing; // How much health is available.
+    int healthtimer; // Increment by healing - playerhealth each tick.
+    const htime = 500; // How much healthtimer we need to heal.
+    // 500 means that if the player has 100 healing stocked up, and is at 0 health,
+    // they heal 1 every 5 ticks.
 
     override bool HandlePickup(Inventory it) {
         if (it is "DriftHealth") {
@@ -21,9 +25,17 @@ class HealthBottle : Inventory {
 
     override void DoEffect() {
         super.DoEffect();
-        if (owner.health < owner.GetMaxHealth(true) && healing > 0 && GetAge() % 5 == 0) {
-            owner.GiveBody(1);
-            healing--;
+        if (owner.health < owner.GetMaxHealth(true) && healing > 0 ) {
+            if(healthtimer >= htime) {
+                owner.GiveBody(1);
+                healing--;
+                healthtimer -= htime;
+            } else {
+                healthtimer += max(10,healing - owner.health);
+                // Absolute worst case scenario, it takes just under 2 seconds to heal 1 hp.
+            }
+        } else {
+            healthtimer = 0; // Reset the healthtimer as long as we have no damage or no healing.
         }
     }
 }
